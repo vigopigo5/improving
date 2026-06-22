@@ -64,16 +64,6 @@ body::before {
     linear-gradient(180deg, #0A0A0B 0%, #050506 100%);
   pointer-events: none;
 }
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background-image: radial-gradient(rgba(255,255,255,0.014) 1px, transparent 1px);
-  background-size: 3px 3px;
-  opacity: 0.7;
-  pointer-events: none;
-}
 
 .shell {
   max-width: 880px;
@@ -105,6 +95,198 @@ body::after {
   color: var(--text-primary);
 }
 .fin-back-btn svg { display: block; }
+.fin-back-btn { cursor: pointer; }
+
+/* ===== AI key modal (standalone) ===== */
+.aikey-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  background: rgba(5,5,6,0.72);
+}
+.aikey-overlay[hidden] { display: none; }
+.aikey-modal {
+  position: relative;
+  width: 100%; max-width: 480px;
+  background: #0d0e10;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px;
+  padding: 26px 24px 20px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+}
+.aikey-close {
+  position: absolute; top: 16px; right: 16px;
+  width: 30px; height: 30px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text-secondary); font-size: 18px; line-height: 1; cursor: pointer;
+}
+.aikey-close:hover { background: rgba(255,255,255,0.1); color: var(--text-primary); }
+.aikey-eyebrow {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
+  color: var(--success); text-transform: uppercase; margin-bottom: 8px;
+}
+.aikey-title { font-size: 24px; font-weight: 600; color: var(--text-primary); margin: 0 0 14px; }
+.aikey-title em { font-style: italic; color: var(--success); font-weight: 600; }
+.aikey-note { font-size: 13px; line-height: 1.55; color: var(--text-secondary); margin: 0 0 18px; }
+.aikey-note.alert { color: var(--warning); }
+.aikey-label {
+  display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.10em;
+  color: var(--text-tertiary); text-transform: uppercase; margin-bottom: 7px;
+}
+.aikey-input {
+  width: 100%; box-sizing: border-box;
+  background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 10px; padding: 12px 13px;
+  color: var(--text-primary); font-family: var(--font-mono); font-size: 13px; outline: none;
+}
+.aikey-input:focus { border-color: rgba(107,227,164,0.5); }
+.aikey-sub { font-size: 12px; color: var(--text-tertiary); margin: 8px 0 0; }
+.aikey-sub a, .aikey-note a { color: var(--success); text-decoration: underline; }
+.aikey-actions { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 20px; }
+.aikey-btn {
+  border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04);
+  color: var(--text-secondary); border-radius: 999px; padding: 11px 20px;
+  font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+}
+.aikey-btn:hover { background: rgba(255,255,255,0.08); color: var(--text-primary); }
+.aikey-btn-save { background: var(--success); border-color: var(--success); color: #07140d; }
+.aikey-btn-save:hover { filter: brightness(1.08); color: #07140d; }
+.aikey-warn { font-size: 11px; line-height: 1.5; color: var(--text-tertiary); margin: 16px 0 0; }
+
+/* ===== Nova — AI money coach ===== */
+.nova-wrap { display: flex; flex-direction: column; gap: 12px; }
+.nova-messages {
+  display: flex; flex-direction: column; gap: 10px;
+  min-height: 240px; max-height: 58vh; overflow-y: auto;
+  padding: 2px;
+}
+.nova-msg {
+  max-width: 88%; padding: 10px 13px; border-radius: 14px;
+  font-size: 13.5px; line-height: 1.5;
+  white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.nova-msg-user {
+  align-self: flex-end;
+  background: rgba(255,255,255,0.10);
+  color: var(--text-primary);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-bottom-right-radius: 4px;
+}
+.nova-msg-nova {
+  align-self: flex-start;
+  background: rgba(255,255,255,0.03);
+  color: var(--text-secondary);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-bottom-left-radius: 4px;
+}
+.nova-msg-loading { color: var(--text-tertiary); font-style: italic; }
+.nova-suggestions { display: flex; flex-wrap: wrap; gap: 8px; }
+.nova-chip {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.10);
+  color: var(--text-secondary);
+  border-radius: 999px; padding: 7px 13px;
+  font-size: 12px; font-family: inherit; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.nova-chip:hover { background: rgba(255,255,255,0.07); color: var(--text-primary); }
+.nova-composer { display: flex; gap: 8px; align-items: flex-end; }
+.nova-input {
+  flex: 1; resize: none; min-height: 44px; max-height: 130px;
+  background: rgba(0,0,0,0.30);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: var(--text-primary);
+  border-radius: 12px; padding: 11px 13px;
+  font-family: inherit; font-size: 14px; line-height: 1.4; outline: none;
+}
+.nova-input::placeholder { color: var(--text-tertiary); }
+.nova-input:focus { border-color: rgba(255,255,255,0.22); }
+.nova-send {
+  flex: 0 0 auto; width: 44px; height: 44px; border-radius: 12px;
+  background: var(--text-primary); color: #000; border: none; cursor: pointer;
+  font-size: 18px; font-weight: 700; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.15s;
+}
+.nova-send:disabled { opacity: 0.4; cursor: default; }
+.nova-disclaimer {
+  font-size: 10.5px; color: var(--text-tertiary);
+  text-align: center; letter-spacing: 0.02em;
+}
+
+/* ===== Receipt scanner ===== */
+.rcpt-card { margin-bottom: 14px; }
+.rcpt-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.rcpt-head-title { display: flex; align-items: center; gap: 8px; }
+.rcpt-head-title .rcpt-emoji { font-size: 16px; }
+.rcpt-head-title .rcpt-t { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+.rcpt-head-title .rcpt-s { font-size: 11px; color: var(--text-tertiary); }
+.rcpt-drop {
+  margin-top: 12px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px; text-align: center;
+  min-height: 104px; padding: 18px 16px;
+  border: 1.5px dashed rgba(255,255,255,0.14);
+  border-radius: var(--radius-md);
+  background: rgba(255,255,255,0.02);
+  color: var(--text-tertiary); cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+.rcpt-drop:hover { border-color: rgba(107,227,164,0.35); color: var(--text-secondary); }
+.rcpt-drop.dragover { border-color: var(--success); background: rgba(107,227,164,0.06); color: var(--text-primary); }
+.rcpt-drop-icon {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(107,227,164,0.12); color: var(--success); font-size: 18px;
+}
+.rcpt-drop-main { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+.rcpt-drop-sub { font-size: 11px; color: var(--text-tertiary); }
+.rcpt-state { margin-top: 12px; display: flex; align-items: center; gap: 12px; }
+.rcpt-thumb {
+  width: 56px; height: 56px; flex: none; border-radius: 10px; object-fit: cover;
+  border: 1px solid rgba(255,255,255,0.10); background: rgba(0,0,0,0.3);
+}
+.rcpt-busy-text { font-size: 13px; color: var(--text-secondary); }
+.rcpt-busy-text .rcpt-dots::after { content: '…'; animation: rcptDots 1.2s steps(4,end) infinite; }
+@keyframes rcptDots { 0%{content:''} 25%{content:'.'} 50%{content:'..'} 75%{content:'...'} }
+.rcpt-error {
+  margin-top: 12px; font-size: 12.5px; color: var(--danger);
+  background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.22);
+  border-radius: 10px; padding: 10px 12px;
+}
+.rcpt-confirm {
+  margin-top: 12px; border: 1px solid rgba(107,227,164,0.22);
+  background: rgba(107,227,164,0.04); border-radius: var(--radius-md); padding: 14px;
+}
+.rcpt-confirm-top { display: flex; gap: 12px; }
+.rcpt-fields { flex: 1; min-width: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.rcpt-field { display: flex; flex-direction: column; gap: 3px; }
+.rcpt-field.full { grid-column: 1 / -1; }
+.rcpt-field label { font-size: 9.5px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--text-tertiary); font-weight: 700; }
+.rcpt-field input, .rcpt-field select {
+  background: rgba(0,0,0,0.30); border: 1px solid rgba(255,255,255,0.10);
+  color: var(--text-primary); border-radius: 8px; padding: 7px 9px;
+  font-family: inherit; font-size: 13px; outline: none; width: 100%;
+}
+.rcpt-field input.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.rcpt-field input:focus, .rcpt-field select:focus { border-color: rgba(107,227,164,0.5); }
+.rcpt-items { margin-top: 10px; font-size: 11.5px; color: var(--text-tertiary); max-height: 96px; overflow-y: auto; }
+.rcpt-items .rcpt-item { display: flex; justify-content: space-between; padding: 2px 0; }
+.rcpt-actions { margin-top: 12px; display: flex; gap: 8px; justify-content: flex-end; }
+.rcpt-btn {
+  border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.04);
+  color: var(--text-secondary); border-radius: 10px; padding: 8px 14px;
+  font-family: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.rcpt-btn:hover { background: rgba(255,255,255,0.08); color: var(--text-primary); }
+.rcpt-btn-apply { background: var(--success); border-color: var(--success); color: #07140d; }
+.rcpt-btn-apply:hover { filter: brightness(1.08); color: #07140d; }
+.rcpt-btn-apply:disabled { opacity: 0.45; cursor: default; filter: none; }
+.rcpt-hint { font-size: 11px; color: var(--text-tertiary); margin-top: 8px; }
+.hidden { display: none !important; }
+@media (max-width: 520px) { .rcpt-fields { grid-template-columns: 1fr; } }
 
 /* ===== Bottom tab bar ===== */
 .bottom-tabs {
@@ -1574,6 +1756,30 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   <span>Back</span>
 </a>
 
+<!-- ===== AI KEY BUTTON ===== -->
+<button type="button" class="fin-back-btn" id="aiKeyBtn" aria-label="Manage AI key" style="margin-left:8px">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"></circle><path d="M10.7 12.3 19 4"></path><path d="M16 7l3 3"></path><path d="M14 9l2 2"></path></svg>
+  <span>AI key</span>
+</button>
+
+<!-- ===== AI KEY MODAL ===== -->
+<div class="aikey-overlay" id="aikeyOverlay" hidden>
+  <div class="aikey-modal" role="dialog" aria-modal="true" aria-labelledby="aikeyTitle">
+    <button type="button" class="aikey-close" id="aikeyClose" aria-label="Close">×</button>
+    <div class="aikey-eyebrow">API KEY</div>
+    <h2 class="aikey-title" id="aikeyTitle">Power the <em>AI features</em></h2>
+    <p class="aikey-note" id="aikeyHint">AI features call Anthropic directly from your browser using a key you paste here. The key is stored only in this browser (localStorage).</p>
+    <label class="aikey-label" for="aikeyInput">ANTHROPIC API KEY · POWERS NOVA + IMAGE SCANNER</label>
+    <input type="password" id="aikeyInput" class="aikey-input" placeholder="sk-ant-…" autocomplete="off" spellcheck="false" />
+    <p class="aikey-sub">Get one at <a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a>.</p>
+    <div class="aikey-actions">
+      <button type="button" class="aikey-btn" id="aikeyCancel">cancel</button>
+      <button type="button" class="aikey-btn aikey-btn-save" id="aikeySave">Save key</button>
+    </div>
+    <p class="aikey-warn">Note: a browser-exposed key can be read by anyone with access to this device. Use a key with limits you're comfortable with.</p>
+  </div>
+</div>
+
 <!-- ===== FINANCE TICKER (rotating subscription renewals) ===== -->
 <div class="finance-ticker hidden" id="financeTicker">
   <span class="ticker-tag" id="tickerTag">RENEWS</span>
@@ -1601,6 +1807,70 @@ input[type="date"]::-webkit-calendar-picker-indicator {
           <option value="EUR">EUR</option>
           <option value="GBP">GBP</option>
         </select>
+      </div>
+    </div>
+
+    <!-- Receipt scanner -->
+    <div class="card nw-subcard rcpt-card" id="rcptCard">
+      <div class="rcpt-head">
+        <div class="rcpt-head-title">
+          <span class="rcpt-emoji">🧾</span>
+          <div>
+            <div class="rcpt-t">Scan anything</div>
+            <div class="rcpt-s">Drop a receipt or a bank screenshot — AI reads it, you name the account</div>
+          </div>
+        </div>
+      </div>
+      <div class="rcpt-drop" id="rcptDrop" role="button" tabindex="0" aria-label="Upload a financial image">
+        <div class="rcpt-drop-icon">↑</div>
+        <div class="rcpt-drop-main">Drop an image here</div>
+        <div class="rcpt-drop-sub">receipt, bill or bank screenshot · click to upload · paste with ⌘V</div>
+      </div>
+      <input type="file" id="rcptFile" accept="image/*" capture="environment" class="hidden" />
+      <div class="rcpt-state hidden" id="rcptBusy">
+        <img class="rcpt-thumb" id="rcptThumb" alt="" />
+        <div class="rcpt-busy-text">Reading image<span class="rcpt-dots"></span></div>
+      </div>
+      <div class="rcpt-error hidden" id="rcptError"></div>
+      <div class="rcpt-confirm hidden" id="rcptConfirm">
+        <div class="rcpt-confirm-top">
+          <img class="rcpt-thumb" id="rcptConfirmThumb" alt="" />
+          <div class="rcpt-fields">
+            <div class="rcpt-field full">
+              <label for="rcptName">Account / bank name</label>
+              <input type="text" id="rcptName" list="rcptAccountList" placeholder="e.g. Revolut" autocomplete="off" />
+              <datalist id="rcptAccountList"></datalist>
+            </div>
+            <div class="rcpt-field">
+              <label for="rcptAmount">Amount</label>
+              <input type="text" inputmode="decimal" id="rcptAmount" class="mono" placeholder="0.00" />
+            </div>
+            <div class="rcpt-field">
+              <label for="rcptCurrency">Currency</label>
+              <select id="rcptCurrency">
+                <option value="CHF">CHF</option><option value="USD">USD</option><option value="EUR">EUR</option><option value="GBP">GBP</option>
+              </select>
+            </div>
+            <div class="rcpt-field">
+              <label for="rcptAction">Action</label>
+              <select id="rcptAction">
+                <option value="set">Set balance</option><option value="add">Add to account</option><option value="spend">Spend (deduct)</option>
+              </select>
+            </div>
+            <div class="rcpt-field">
+              <label for="rcptCategory">Category</label>
+              <select id="rcptCategory">
+                <option value="bank">🏦 Bank</option><option value="stocks">📈 Stocks</option><option value="crypto">🪙 Crypto</option><option value="other">💼 Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="rcpt-items hidden" id="rcptItems"></div>
+        <div class="rcpt-hint" id="rcptHint"></div>
+        <div class="rcpt-actions">
+          <button type="button" class="rcpt-btn" id="rcptDiscard">Discard</button>
+          <button type="button" class="rcpt-btn rcpt-btn-apply" id="rcptApply">Apply</button>
+        </div>
       </div>
     </div>
 
@@ -1859,6 +2129,29 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   </div>
 </div>
 
+<!-- ===== NOVA — AI money coach ===== -->
+<div class="section" data-section="nova" hidden>
+  <div class="section-title">
+    <span class="section-title-text">NOVA · MONEY COACH</span>
+  </div>
+  <div class="card nova-wrap">
+    <div class="nova-messages" id="novaMessages">
+      <div class="nova-msg nova-msg-nova">Hey — I'm Nova, your money coach. I can see your net worth, subscriptions, incoming orders and wishlist. Ask me anything, or tap a starter below.</div>
+    </div>
+    <div class="nova-suggestions" id="novaSuggestions">
+      <button class="nova-chip" data-q="How am I doing financially? Give me a quick read on my net worth.">How am I doing?</button>
+      <button class="nova-chip" data-q="Where can I realistically cut back on my spending?">Where can I cut back?</button>
+      <button class="nova-chip" data-q="Can I afford everything on my wishlist right now?">Afford my wishlist?</button>
+      <button class="nova-chip" data-q="Which of my subscriptions should I review or cancel?">Review my subs</button>
+    </div>
+    <div class="nova-composer">
+      <textarea id="novaInput" class="nova-input" rows="1" placeholder="Ask Nova about your money…"></textarea>
+      <button id="novaSend" class="nova-send" aria-label="Send message">↑</button>
+    </div>
+    <div class="nova-disclaimer">Nova gives general guidance, not regulated financial advice.</div>
+  </div>
+</div>
+
 </div>
 
 <!-- ===== BOTTOM TAB BAR ===== -->
@@ -1879,6 +2172,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     <span class="bot-tab-icon">🎯</span>
     <span class="bot-tab-label">Wishlist</span>
   </button>
+  <button class="bot-tab" data-tab="nova">
+    <span class="bot-tab-icon">✨</span>
+    <span class="bot-tab-label">Nova</span>
+  </button>
 </nav>
 
 <script>
@@ -1894,6 +2191,64 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
   function storeSet(key, value) {
     try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
+  }
+
+  // ============================================================
+  // AI BRIDGE — calls Anthropic directly from the browser using a
+  // key the user pastes (stored in localStorage on this device only).
+  // ============================================================
+  var AI_KEY_LS = 'ai_anthropic_key';
+  var AI_DEFAULT_HINT = 'AI features call Anthropic directly from your browser using a key you paste here. The key is stored only in this browser (localStorage).';
+  function getAiKey() { try { return localStorage.getItem(AI_KEY_LS) || ''; } catch (e) { return ''; } }
+  function setAiKey(v) { try { if (v) localStorage.setItem(AI_KEY_LS, v); else localStorage.removeItem(AI_KEY_LS); } catch (e) {} }
+
+  var aikeyOverlay = document.getElementById('aikeyOverlay');
+  var aikeyInput   = document.getElementById('aikeyInput');
+  var aikeyHint    = document.getElementById('aikeyHint');
+  function openKeyModal(alertMsg) {
+    if (!aikeyOverlay) return;
+    if (aikeyInput) aikeyInput.value = getAiKey();
+    if (aikeyHint) {
+      aikeyHint.textContent = alertMsg || AI_DEFAULT_HINT;
+      aikeyHint.classList.toggle('alert', !!alertMsg);
+    }
+    aikeyOverlay.hidden = false;
+    setTimeout(function() { if (aikeyInput) aikeyInput.focus(); }, 30);
+  }
+  function closeKeyModal() { if (aikeyOverlay) aikeyOverlay.hidden = true; }
+  (function wireKeyModal() {
+    var btn = document.getElementById('aiKeyBtn');
+    var closeB = document.getElementById('aikeyClose');
+    var cancelB = document.getElementById('aikeyCancel');
+    var saveB = document.getElementById('aikeySave');
+    if (btn) btn.addEventListener('click', function() { openKeyModal(); });
+    if (closeB) closeB.addEventListener('click', closeKeyModal);
+    if (cancelB) cancelB.addEventListener('click', closeKeyModal);
+    if (saveB) saveB.addEventListener('click', function() { setAiKey(aikeyInput.value.trim()); closeKeyModal(); });
+    if (aikeyOverlay) aikeyOverlay.addEventListener('click', function(e) { if (e.target === aikeyOverlay) closeKeyModal(); });
+    if (aikeyInput) aikeyInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') { setAiKey(aikeyInput.value.trim()); closeKeyModal(); } });
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && aikeyOverlay && !aikeyOverlay.hidden) closeKeyModal(); });
+  })();
+
+  async function callClaude(body) {
+    var key = getAiKey();
+    if (!key) { var e = new Error('NO_KEY'); e.code = 'NO_KEY'; throw e; }
+    var r = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true',
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+    var data = await r.json().catch(function() { return {}; });
+    if (!r.ok) {
+      var msg = (data && data.error && data.error.message) || ('Anthropic API error (' + r.status + ')');
+      var e2 = new Error(msg); e2.code = 'API'; throw e2;
+    }
+    return data;
   }
 
   // ============================================================
@@ -1928,7 +2283,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
   tabs.forEach(b => b.addEventListener('click', () => setActiveTab(b.dataset.tab)));
   const savedTab = storeGet(TAB_KEY);
-  setActiveTab(savedTab && ['net','subs','incoming','wish'].includes(savedTab) ? savedTab : 'net');
+  setActiveTab(savedTab && ['net','subs','incoming','wish','nova'].includes(savedTab) ? savedTab : 'net');
 
   // ============================================================
   // NET WORTH (copied from the main dashboard, verbatim logic)
@@ -3369,6 +3724,340 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
   safeRenderTicker();
   setInterval(safeRenderTicker, 1500);
+
+  // ============================================================
+  // NOVA — AI money coach
+  // ============================================================
+  (function initNova() {
+    var messagesEl = document.getElementById('novaMessages');
+    var inputEl    = document.getElementById('novaInput');
+    var sendBtn    = document.getElementById('novaSend');
+    var suggEl     = document.getElementById('novaSuggestions');
+    if (!messagesEl || !inputEl || !sendBtn) return;
+
+    var convo = [];
+
+    function gatherFinance() {
+      var breakdown = {};
+      var netWorthCHF = 0;
+      ['bank', 'stocks', 'crypto', 'other'].forEach(function(k) {
+        var items = storeGet('nw:' + k) || [];
+        breakdown[k] = items.map(function(it) { return { name: it.name, amountCHF: Number(it.amount) || 0 }; });
+        items.forEach(function(it) { netWorthCHF += Number(it.amount) || 0; });
+      });
+      return {
+        currency: storeGet('nw_currency') || 'CHF',
+        netWorthCHF: Math.round(netWorthCHF),
+        accounts: breakdown,
+        subscriptions: storeGet('subs') || [],
+        incomingOrders: storeGet('incoming_orders') || [],
+        wishlist: storeGet('wishlist') || []
+      };
+    }
+
+    function addBubble(role, text) {
+      var el = document.createElement('div');
+      el.className = 'nova-msg nova-msg-' + role;
+      el.textContent = text;
+      messagesEl.appendChild(el);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      return el;
+    }
+
+    async function send(text) {
+      text = (text != null ? text : inputEl.value || '').trim();
+      if (!text || sendBtn.disabled) return;
+      inputEl.value = '';
+      inputEl.style.height = 'auto';
+      if (suggEl) suggEl.style.display = 'none';
+
+      addBubble('user', text);
+      convo.push({ role: 'user', content: text });
+
+      sendBtn.disabled = true;
+      var pending = addBubble('nova', 'Nova is thinking…');
+      pending.classList.add('nova-msg-loading');
+
+      var system =
+        "You are Nova, the built-in money coach for a personal net-worth dashboard. "
+        + "A JSON snapshot of the user's own finances is included below.\n\n"
+        + "Be warm, direct and concise. Lead with the answer, then a short reason. "
+        + "Ground every claim in their actual data. Quote real figures. "
+        + "Net-worth amounts are in CHF. Reply with your final answer only.\n\n"
+        + "Finance snapshot (JSON):\n" + JSON.stringify(gatherFinance());
+
+      try {
+        var data = await callClaude({
+          model: 'claude-sonnet-4-6',
+          max_tokens: 1024,
+          system: system,
+          messages: convo
+        });
+        pending.classList.remove('nova-msg-loading');
+        var reply = (data.content || [])
+          .filter(function(b) { return b && b.type === 'text'; }).map(function(b) { return b.text; }).join('').trim() || '(no response)';
+        pending.textContent = reply;
+        convo.push({ role: 'assistant', content: reply });
+      } catch (e) {
+        pending.classList.remove('nova-msg-loading');
+        if (e && e.code === 'NO_KEY') {
+          pending.textContent = '⚠ Add your Anthropic API key to chat with Nova — tap "AI key" at the top.';
+          openKeyModal('Nova needs an Anthropic API key. Paste one below to start chatting.');
+        } else {
+          pending.textContent = '⚠ ' + ((e && e.message) || "Couldn't reach Nova.");
+        }
+      } finally {
+        sendBtn.disabled = false;
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+    }
+
+    inputEl.addEventListener('input', function() {
+      inputEl.style.height = 'auto';
+      inputEl.style.height = Math.min(inputEl.scrollHeight, 130) + 'px';
+    });
+    inputEl.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+    });
+    sendBtn.addEventListener('click', function() { send(); });
+    if (suggEl) suggEl.querySelectorAll('[data-q]').forEach(function(chip) {
+      chip.addEventListener('click', function() { send(chip.dataset.q); });
+    });
+  })();
+
+  // ============================================================
+  // IMAGE SCANNER — drag/drop/paste financial images, AI reads them
+  // ============================================================
+  (function initReceiptScanner() {
+    var card = document.getElementById('rcptCard');
+    if (!card) return;
+    var dropEl = document.getElementById('rcptDrop');
+    var fileEl = document.getElementById('rcptFile');
+    var busyEl = document.getElementById('rcptBusy');
+    var busyThumb = document.getElementById('rcptThumb');
+    var errorEl = document.getElementById('rcptError');
+    var confirmEl = document.getElementById('rcptConfirm');
+    var confThumb = document.getElementById('rcptConfirmThumb');
+    var nameEl = document.getElementById('rcptName');
+    var amountEl = document.getElementById('rcptAmount');
+    var currencyEl2 = document.getElementById('rcptCurrency');
+    var actionEl = document.getElementById('rcptAction');
+    var categoryEl = document.getElementById('rcptCategory');
+    var acctListEl = document.getElementById('rcptAccountList');
+    var itemsEl = document.getElementById('rcptItems');
+    var hintEl = document.getElementById('rcptHint');
+    var applyBtn = document.getElementById('rcptApply');
+    var discardBtn = document.getElementById('rcptDiscard');
+
+    var VALID_CCY = ['CHF', 'USD', 'EUR', 'GBP'];
+    var CAT_NAMES = { bank: 'Bank', stocks: 'Stocks', crypto: 'Crypto', other: 'Other' };
+    var receiptDate = '';
+    var acctIndex = {};
+
+    var SCAN_TOOL = {
+      name: 'read_finance_image',
+      description: 'Record financial figures from an image.',
+      input_schema: {
+        type: 'object',
+        properties: {
+          readable: { type: 'boolean' },
+          kind: { type: 'string', enum: ['balance', 'expense', 'income', 'other'] },
+          source: { type: 'string' },
+          currency: { type: 'string' },
+          amount: { type: 'number' },
+          date: { type: 'string' },
+          items: { type: 'array', items: { type: 'object', properties: { name: { type: 'string' }, amount: { type: 'number' } }, required: ['name', 'amount'] } }
+        },
+        required: ['readable', 'kind', 'source', 'currency', 'amount']
+      }
+    };
+    var SCAN_SYSTEM = "You read ANY image with financial information and extract figures. Always call read_finance_image exactly once. amount=positive headline figure. Numbers plain, no symbols.";
+
+    function show(el) { el.classList.remove('hidden'); }
+    function hide(el) { el.classList.add('hidden'); }
+    function reset() { show(dropEl); hide(busyEl); hide(errorEl); hide(confirmEl); fileEl.value = ''; receiptDate = ''; }
+    function showError(msg) { hide(busyEl); hide(confirmEl); show(dropEl); errorEl.textContent = '⚠ ' + msg; show(errorEl); }
+
+    async function downscale(file) {
+      return new Promise(function(res, rej) {
+        var img = new Image();
+        var url = URL.createObjectURL(file);
+        img.onload = function() {
+          URL.revokeObjectURL(url);
+          var w = img.naturalWidth, h = img.naturalHeight;
+          var scale = Math.min(1, 1568 / Math.max(w, h || 1));
+          w = Math.max(1, Math.round(w * scale));
+          h = Math.max(1, Math.round(h * scale));
+          var c = document.createElement('canvas');
+          c.width = w; c.height = h;
+          c.getContext('2d').drawImage(img, 0, 0, w, h);
+          var dataUrl = c.toDataURL('image/jpeg', 0.85);
+          res({ dataUrl: dataUrl, base64: dataUrl.split(',')[1] || '', mediaType: 'image/jpeg' });
+        };
+        img.onerror = function() { URL.revokeObjectURL(url); rej(new Error("Couldn't read image.")); };
+        img.src = url;
+      });
+    }
+
+    function fillAccountList() {
+      acctListEl.innerHTML = '';
+      acctIndex = {};
+      NW_CATS.forEach(function(c) {
+        (storeGet('nw:' + c.key) || []).forEach(function(it) {
+          var nm = String(it.name || '').trim();
+          if (!nm) return;
+          acctIndex[nm.toLowerCase()] = { cat: c.key };
+          var o = document.createElement('option');
+          o.value = nm;
+          acctListEl.appendChild(o);
+        });
+      });
+    }
+    function matchAccount() {
+      var hit = acctIndex[nameEl.value.trim().toLowerCase()];
+      if (hit) categoryEl.value = hit.cat;
+    }
+    function parseAmount() { var n = parseFloat(String(amountEl.value).replace(/[^0-9.\-]/g, '')); return isNaN(n) ? 0 : n; }
+    function findAccount(name) {
+      var target = name.trim().toLowerCase();
+      for (var ci = 0; ci < NW_CATS.length; ci++) {
+        var c = NW_CATS[ci];
+        var items = storeGet('nw:' + c.key) || [];
+        var idx = items.findIndex(function(it) { return String(it.name).trim().toLowerCase() === target; });
+        if (idx >= 0) return { cat: c.key, items: items, idx: idx, cur: Number(items[idx].amount) || 0 };
+      }
+      return null;
+    }
+
+    function refreshHint() {
+      var name = nameEl.value.trim();
+      var amount = parseAmount();
+      var rate = exchangeRates[currencyEl2.value] || 1;
+      if (!name) { hintEl.textContent = 'Type the account or bank name.'; applyBtn.disabled = true; return; }
+      if (!(amount > 0)) { hintEl.textContent = ''; applyBtn.disabled = true; return; }
+      var amtCHF = amount / rate;
+      var existing = findAccount(name);
+      var catKey = existing ? existing.cat : categoryEl.value;
+      var label = CAT_NAMES[catKey] + ' · ' + name;
+      var cur = existing ? existing.cur : 0;
+      var action = actionEl.value;
+      var msg;
+      if (action === 'set') msg = (existing ? 'Sets ' : 'Creates ') + label + ' at ' + fmtMoney(amtCHF);
+      else if (action === 'add') msg = 'Adds ' + fmtMoney(amtCHF) + ' to ' + label;
+      else msg = 'Deducts ' + fmtMoney(amtCHF) + ' from ' + label;
+      hintEl.textContent = msg;
+      applyBtn.disabled = false;
+    }
+
+    function showConfirm(receipt, dataUrl) {
+      hide(busyEl); hide(errorEl); hide(dropEl);
+      if (receipt.readable === false) { showError("Couldn't find amounts in that image."); return; }
+      confThumb.src = dataUrl;
+      nameEl.value = String(receipt.source || '').trim();
+      amountEl.value = receipt.amount ? String(receipt.amount) : '';
+      var ccy = String(receipt.currency || '').toUpperCase();
+      if (!VALID_CCY.includes(ccy)) ccy = 'CHF';
+      currencyEl2.value = ccy;
+      receiptDate = String(receipt.date || '').trim();
+      actionEl.value = receipt.kind === 'expense' ? 'spend' : (receipt.kind === 'income' ? 'add' : 'set');
+      categoryEl.value = 'bank';
+      fillAccountList(); matchAccount();
+      var items = Array.isArray(receipt.items) ? receipt.items : [];
+      if (items.length) {
+        itemsEl.innerHTML = items.slice(0, 20).map(function(it) {
+          return '<div class="rcpt-item"><span>' + escapeHtml(String(it.name || '')) + '</span><span>' + (it.amount ? it.amount.toFixed(2) : '') + '</span></div>';
+        }).join('');
+        show(itemsEl);
+      } else { itemsEl.innerHTML = ''; hide(itemsEl); }
+      refreshHint(); show(confirmEl);
+    }
+
+    async function handleFile(file) {
+      if (!file || !/^image\//.test(file.type)) { showError('Please choose an image file.'); return; }
+      hide(dropEl); hide(errorEl); hide(confirmEl);
+      var img;
+      try { img = await downscale(file); } catch (e) { showError(e.message); return; }
+      busyThumb.src = img.dataUrl; show(busyEl);
+      try {
+        var data = await callClaude({
+          model: 'claude-sonnet-4-6',
+          max_tokens: 1024,
+          system: SCAN_SYSTEM,
+          tools: [SCAN_TOOL],
+          tool_choice: { type: 'tool', name: 'read_finance_image' },
+          messages: [{ role: 'user', content: [
+            { type: 'image', source: { type: 'base64', media_type: img.mediaType, data: img.base64 } },
+            { type: 'text', text: 'Read this image and record any financial figures.' }
+          ]}]
+        });
+        var block = (data.content || []).find(function(b) { return b && b.type === 'tool_use' && b.name === 'read_finance_image'; });
+        if (!block || !block.input) { showError('Could not read that image.'); return; }
+        showConfirm(block.input, img.dataUrl);
+      } catch (e) {
+        if (e && e.code === 'NO_KEY') {
+          showError('Add your API key first — tap "AI key" at the top.');
+          openKeyModal('The image scanner needs an Anthropic API key.');
+        } else { showError((e && e.message) || "Couldn't reach the image reader."); }
+      }
+    }
+
+    function apply() {
+      if (applyBtn.disabled) return;
+      var name = nameEl.value.trim();
+      var amount = parseAmount();
+      if (!name || !(amount > 0)) return;
+      var rate = exchangeRates[currencyEl2.value] || 1;
+      var amtCHF = amount / rate;
+      var action = actionEl.value;
+      var found = findAccount(name);
+      var cat, items, idx, cur, isNew;
+      if (found) { cat = found.cat; items = found.items; idx = found.idx; cur = found.cur; isNew = false; }
+      else { cat = categoryEl.value; items = storeGet('nw:' + cat) || []; items.push({ name: name, amount: 0 }); idx = items.length - 1; cur = 0; isNew = true; }
+      var next;
+      if (action === 'set') next = amtCHF;
+      else if (action === 'add') next = cur + amtCHF;
+      else next = cur - amtCHF;
+      var delta = next - cur;
+      items[idx].amount = next;
+      storeSet('nw:' + cat, items);
+      logActivity(cat, name, delta, isNew ? 'add' : 'edit');
+      renderAllNetWorth();
+      reset();
+    }
+
+    dropEl.addEventListener('click', function() { fileEl.click(); });
+    dropEl.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileEl.click(); } });
+    fileEl.addEventListener('change', function() { if (fileEl.files && fileEl.files[0]) handleFile(fileEl.files[0]); });
+    ['dragenter', 'dragover'].forEach(function(ev) {
+      dropEl.addEventListener(ev, function(e) { e.preventDefault(); e.stopPropagation(); dropEl.classList.add('dragover'); });
+    });
+    ['dragleave', 'dragend'].forEach(function(ev) {
+      dropEl.addEventListener(ev, function(e) { e.preventDefault(); e.stopPropagation(); dropEl.classList.remove('dragover'); });
+    });
+    dropEl.addEventListener('drop', function(e) {
+      e.preventDefault(); e.stopPropagation(); dropEl.classList.remove('dragover');
+      var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      if (f) handleFile(f);
+    });
+    document.addEventListener('paste', function(e) {
+      var netSection = document.querySelector('.section[data-section="net"]');
+      if (!netSection || netSection.hasAttribute('hidden')) return;
+      var items = (e.clipboardData && e.clipboardData.items) || [];
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].type && items[i].type.indexOf('image') === 0) {
+          var f = items[i].getAsFile();
+          if (f) { e.preventDefault(); handleFile(f); break; }
+        }
+      }
+    });
+    nameEl.addEventListener('input', function() { matchAccount(); refreshHint(); });
+    amountEl.addEventListener('input', refreshHint);
+    currencyEl2.addEventListener('change', refreshHint);
+    actionEl.addEventListener('change', refreshHint);
+    categoryEl.addEventListener('change', refreshHint);
+    applyBtn.addEventListener('click', apply);
+    discardBtn.addEventListener('click', reset);
+  })();
 
 })();
 </script>
