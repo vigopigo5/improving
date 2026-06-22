@@ -40,15 +40,8 @@ body::before {
   background:
     radial-gradient(circle at 82% 14%, rgba(107,227,164,0.12), transparent 45%),
     radial-gradient(circle at 18% 90%, rgba(201,163,107,0.07), transparent 50%);
-  filter: blur(40px); pointer-events: none; z-index: -2;
-  animation: drift 36s ease-in-out infinite alternate;
+  pointer-events: none; z-index: -2;
 }
-body::after {
-  content: ''; position: fixed; inset: 0;
-  background-image: radial-gradient(rgba(255,255,255,0.014) 1px, transparent 1px);
-  background-size: 3px 3px; pointer-events: none; z-index: -1;
-}
-@keyframes drift { 0%{transform:translate3d(0,0,0)} 100%{transform:translate3d(-22px,14px,0)} }
 
 .page { max-width: 1100px; margin: 0 auto; }
 .dash-title {
@@ -69,7 +62,7 @@ body::after {
 
 .gm-card {
   position: relative; background: rgba(255,255,255,0.04); border-radius: 16px; padding: 20px;
-  margin-bottom: 14px; backdrop-filter: blur(24px) saturate(1.2); -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  margin-bottom: 14px;
   box-shadow: 0 12px 40px rgba(0,0,0,0.45); overflow: hidden;
 }
 .gm-eyebrow { font-size: 10.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-tertiary); }
@@ -503,7 +496,7 @@ body::after {
       pts.forEach((p,i)=>{ if(i) line+=' L '+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1); });
       const area=line+' L '+W+' '+(H-padB)+' L 0 '+(H-padB)+' Z';
       parts.push('<path d="'+area+'" fill="url(#eg)"/>');
-      parts.push('<path d="'+line+'" fill="none" stroke="#6BE3A4" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" style="filter:drop-shadow(0 0 6px rgba(107,227,164,0.55))"/>');
+      parts.push('<path d="'+line+'" fill="none" stroke="#6BE3A4" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" />');
     }
 
     // markers: now + scrub

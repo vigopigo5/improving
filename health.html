@@ -57,17 +57,8 @@ body::before {
   background:
     radial-gradient(60% 50% at 82% 14%, rgba(224, 118, 88, 0.16) 0%, transparent 60%),
     radial-gradient(50% 40% at 18% 90%, rgba(180, 180, 200, 0.06) 0%, transparent 60%);
-  filter: blur(40px);
   pointer-events: none; z-index: 0;
-  animation: drift 36s ease-in-out infinite alternate;
 }
-body::after {
-  content: ''; position: fixed; inset: 0;
-  background-image: radial-gradient(rgba(255,255,255,0.014) 1px, transparent 1px);
-  background-size: 3px 3px;
-  pointer-events: none; z-index: 1;
-}
-@keyframes drift { 0% { transform: translate(0, 0); } 100% { transform: translate(-2%, 2%); } }
 
 main {
   position: relative; z-index: 2;
@@ -141,9 +132,7 @@ main {
   background: var(--bg-card);
   border-radius: 16px;
   padding: 22px 22px 18px;
-  backdrop-filter: blur(24px) saturate(1.2);
-  -webkit-backdrop-filter: blur(24px) saturate(1.2);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.35);
 }
 
 .stack-head { margin-bottom: 12px; }
@@ -444,9 +433,7 @@ main {
   border-radius: 12px;
   max-height: 280px;
   overflow-y: auto;
-  backdrop-filter: blur(20px) saturate(1.2);
-  -webkit-backdrop-filter: blur(20px) saturate(1.2);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
   z-index: 50;
   padding: 6px;
 }
@@ -540,7 +527,7 @@ main {
     .wh-refresh.spin { transform:rotate(360deg); }
     /* Ring */
     .wh-ring-wrap { position:relative; width:240px; max-width:78%; margin:0 auto 24px; aspect-ratio:1; }
-    .wh-ring { width:100%; height:100%; transform:rotate(-90deg); filter:drop-shadow(0 0 24px rgba(255,255,255,0.05)); }
+    .wh-ring { width:100%; height:100%; transform:rotate(-90deg); }
     .wh-ring-track { fill:none; stroke:rgba(255,255,255,0.06); stroke-width:12; }
     .wh-ring-fill { fill:none; stroke:#FFF; stroke-width:12; stroke-linecap:round; stroke-dasharray:603.19; stroke-dashoffset:603.19; transition:stroke-dashoffset 0.8s cubic-bezier(0.22,1,0.36,1), stroke 0.4s; }
     .wh-ring-center { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; pointer-events:none; }
