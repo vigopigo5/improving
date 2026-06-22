@@ -623,12 +623,25 @@ body::before {
   loadWhoop();
   setInterval(()=>{ if(scrubT==null) renderAll(); }, 60000);
 
-  /* ============ Cloud sync ============ */
-  if(window.initCloudSync){
-    window.initCloudSync({ appKey:'caffeine', syncedKeys:[LOGS_KEY,CUSTOM_KEY],
-      onApplied:function(){ logs=loadJSON(LOGS_KEY,[]); custom=loadJSON(CUSTOM_KEY,[]); renderResults($('search').value); renderAll(); } });
-  }
+  window.addEventListener('caf-sync', function(){
+    logs=loadJSON(LOGS_KEY,[]); custom=loadJSON(CUSTOM_KEY,[]);
+    renderResults($('search').value); renderAll();
+  });
+
 })();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  if (typeof initCloudSync !== 'function') return;
+  var LOGS_KEY='caf:logs', CUSTOM_KEY='caf:custom';
+  function loadJSON(k,f){ try { return JSON.parse(localStorage.getItem(k)) || f; } catch(e){ return f; } }
+  initCloudSync({ appKey:'caffeine', syncedKeys:[LOGS_KEY,CUSTOM_KEY],
+    onApplied:function(){
+      window.dispatchEvent(new CustomEvent('caf-sync'));
+    }
+  });
+});
 </script>
 </body>
 </html>
