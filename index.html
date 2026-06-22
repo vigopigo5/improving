@@ -5,7 +5,7 @@
 <script src="/api/config"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#08080a">
+<meta name="theme-color" content="#030304">
 <title>Dashboard</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -15,18 +15,18 @@
 <style>
 /* ===== Batman Dark Theme ===== */
 :root {
-  --text-primary: #E8E6E1;
-  --text-secondary: #8A8880;
-  --text-tertiary: #5A584F;
-  --bat-yellow: #D4A917;
-  --bat-gold: #C49B0C;
+  --text-primary: #D0CEC9;
+  --text-secondary: #6E6D68;
+  --text-tertiary: #454440;
+  --bat-blue: #2A4A6B;
+  --bat-blue-light: #3B6A96;
   --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 * { box-sizing: border-box; }
 html, body {
   margin: 0; padding: 0;
-  background: #08080a;
+  background: #030304;
   color: var(--text-secondary);
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
@@ -39,15 +39,15 @@ body {
 body::before {
   content: ''; position: fixed; inset: 0;
   background:
-    radial-gradient(circle at 80% 10%, rgba(212,169,23,0.05), transparent 50%),
-    radial-gradient(circle at 15% 85%, rgba(212,169,23,0.025), transparent 55%);
+    radial-gradient(circle at 80% 10%, rgba(42,74,107,0.07), transparent 50%),
+    radial-gradient(circle at 15% 85%, rgba(42,74,107,0.04), transparent 55%);
   pointer-events: none; z-index: -2;
 }
 
 .page { max-width: 1100px; margin: 0 auto; }
 .dash-title {
   margin: 0 0 18px; font-size: 28px; font-weight: 700; letter-spacing: -0.025em;
-  background: linear-gradient(180deg, #D4A917 0%, #A07E0A 120%);
+  background: linear-gradient(180deg, #3B6A96 0%, #1E3A55 120%);
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent; color: transparent;
 }
@@ -62,15 +62,15 @@ body::before {
   gap: 14px;
 }
 .tile {
-  --accent: #D4A917;
+  --accent: #2A4A6B;
   position: relative; overflow: hidden;
   display: flex; flex-direction: column;
   padding: 20px;
   border-radius: 18px;
   text-decoration: none;
-  background: rgba(255,255,255,0.025);
-  border: 1px solid rgba(212,169,23,0.08);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  background: rgba(255,255,255,0.018);
+  border: 1px solid rgba(42,74,107,0.12);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
   transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
 }
 .tile::before {
@@ -81,7 +81,7 @@ body::before {
 }
 .tile:hover {
   transform: translateY(-3px);
-  border-color: rgba(212,169,23,0.25);
+  border-color: rgba(59,106,150,0.30);
   box-shadow: 0 8px 28px rgba(0,0,0,0.5);
 }
 .tile:hover::before { opacity: 1; }
@@ -110,7 +110,7 @@ body::before {
   font-size: 13px; color: var(--text-tertiary);
 }
 .tile-arrow {
-  font-size: 18px; color: var(--bat-yellow);
+  font-size: 18px; color: var(--bat-blue-light);
   transition: transform 0.18s ease; flex-shrink: 0;
 }
 .tile:hover .tile-arrow { transform: translateX(4px); }
@@ -133,12 +133,12 @@ body::before {
 .gear-btn {
   width: 42px; height: 42px; flex-shrink: 0;
   display: inline-flex; align-items: center; justify-content: center;
-  border-radius: 12px; border: 1px solid rgba(212,169,23,0.12);
-  background: rgba(255,255,255,0.025); color: var(--text-secondary);
+  border-radius: 12px; border: 1px solid rgba(42,74,107,0.15);
+  background: rgba(255,255,255,0.018); color: var(--text-secondary);
   cursor: pointer; transition: background 0.15s, color 0.15s, transform 0.1s;
   -webkit-tap-highlight-color: transparent;
 }
-.gear-btn:hover { background: rgba(212,169,23,0.08); color: var(--bat-yellow); }
+.gear-btn:hover { background: rgba(42,74,107,0.12); color: var(--bat-blue-light); }
 .gear-btn:active { transform: scale(0.94) rotate(35deg); }
 .gear-btn svg { width: 22px; height: 22px; }
 
@@ -151,7 +151,7 @@ body::before {
 .modal-bg.show { display: flex; }
 .modal {
   width: 100%; max-width: 460px; max-height: 88vh; overflow-y: auto;
-  background: #0c0c0e; border: 1px solid rgba(212,169,23,0.10);
+  background: #060608; border: 1px solid rgba(42,74,107,0.12);
   border-radius: 18px; padding: 22px; box-shadow: 0 24px 70px rgba(0,0,0,0.7);
 }
 .modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
@@ -173,9 +173,9 @@ body::before {
 .seg button.on { background: rgba(255,255,255,0.12); color: var(--text-primary); }
 .set-save {
   width: 100%; margin-top: 6px; padding: 13px; border: 0; border-radius: 12px;
-  background: linear-gradient(180deg,#D4A917,#A07E0A); color: #08080a;
+  background: linear-gradient(180deg,#2A4A6B,#1A3350); color: #D0CEC9;
   font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer;
-  box-shadow: inset 0 1px 0 rgba(212,169,23,0.6), 0 8px 22px rgba(0,0,0,0.4);
+  box-shadow: inset 0 1px 0 rgba(59,106,150,0.4), 0 8px 22px rgba(0,0,0,0.5);
   transition: filter 0.15s, transform 0.1s;
 }
 .set-save:hover { filter: brightness(1.05); }
@@ -186,7 +186,7 @@ body::before {
 .whoop-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .whoop-status { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--text-primary); }
 .whoop-status .dot { width: 8px; height: 8px; border-radius: 50%; background: #76746E; }
-.whoop-status.on .dot { background: #D4A917; box-shadow: 0 0 8px rgba(212,169,23,0.7); }
+.whoop-status.on .dot { background: #3B6A96; box-shadow: 0 0 8px rgba(59,106,150,0.7); }
 .whoop-sync { font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); text-align: right; }
 .whoop-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 14px; }
 .whoop-stat { text-align: center; }
@@ -212,7 +212,7 @@ body::before {
   <div class="bento">
 
     <!-- Big tile -->
-    <a class="tile big" href="main.html" style="--accent:#D4A917">
+    <a class="tile big" href="main.html" style="--accent:#2A4A6B">
       <div class="tile-top">
         <span class="tile-num">·01</span>
         <span class="tile-emoji">🏠</span>
@@ -226,7 +226,7 @@ body::before {
     </a>
 
     <!-- Wide tile -->
-    <a class="tile wide" href="gym.html" style="--accent:#BFA11A">
+    <a class="tile wide" href="gym.html" style="--accent:#1E3E5E">
       <div class="tile-top">
         <span class="tile-num">·02</span>
         <span class="tile-emoji">💪</span>
@@ -240,7 +240,7 @@ body::before {
     </a>
 
     <!-- Small tile -->
-    <a class="tile" href="health.html" style="--accent:#A89230">
+    <a class="tile" href="health.html" style="--accent:#253D55">
       <div class="tile-top">
         <span class="tile-num">·03</span>
         <span class="tile-emoji">💊</span>
@@ -254,7 +254,7 @@ body::before {
     </a>
 
     <!-- Small tile -->
-    <a class="tile" href="po-water.html" style="--accent:#C9A80E">
+    <a class="tile" href="po-water.html" style="--accent:#1A3550">
       <div class="tile-top">
         <span class="tile-num">·04</span>
         <span class="tile-emoji">💧</span>
@@ -268,7 +268,7 @@ body::before {
     </a>
 
     <!-- Wide tile -->
-    <a class="tile wide" href="finance.html" style="--accent:#D4A917">
+    <a class="tile wide" href="finance.html" style="--accent:#2E4F70">
       <div class="tile-top">
         <span class="tile-num">·05</span>
         <span class="tile-emoji">📊</span>
@@ -282,7 +282,7 @@ body::before {
     </a>
 
     <!-- Small tile -->
-    <a class="tile" href="caffeine.html" style="--accent:#9E8520">
+    <a class="tile" href="caffeine.html" style="--accent:#1F3448">
       <div class="tile-top">
         <span class="tile-num">·06</span>
         <span class="tile-emoji">☕</span>
@@ -296,7 +296,7 @@ body::before {
     </a>
 
     <!-- Wide tile -->
-    <a class="tile wide" href="nova-lite.html" style="--accent:#B89B15">
+    <a class="tile wide" href="nova-lite.html" style="--accent:#22415E">
       <div class="tile-top">
         <span class="tile-num">·07</span>
         <span class="tile-emoji">🧠</span>
